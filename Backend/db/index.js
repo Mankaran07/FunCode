@@ -22,7 +22,11 @@ const courseSchema = new mongoose.Schema({
     description: String,
     price: Number,
     imageLink: String,
-    published: Boolean
+    published: {
+        type: Boolean,
+        default: true,
+    },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'Admin'}
 });
   
 const User = mongoose.model('User' , userSchema);
