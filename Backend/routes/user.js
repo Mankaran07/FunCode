@@ -1,12 +1,12 @@
 const express = require('express');
 const { authenticateJwt, secret } = require("../middleware/auth");
-const { User, Course } = require("../db/index");
-const mongoose = require('mongoose');
+const { validateCredentials } = require("../middleware/valid"); 
+const { User } = require("../db/index");
 const jwt = require('jsonwebtoken');
 
 const router = express.Router();
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', validateCredentials , async (req, res) => {
     const {username , password} = req.body;
     if(!username || !password) {
       return res.status(400).json({message:'Username and Password are required.'});
@@ -20,7 +20,7 @@ router.post('/signup', async (req, res) => {
     res.json({message: 'User Created Successfully' , token});
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validateCredentials , async (req, res) => {
     const {username , password} = req.body;
     if(!username || !password) {
       return res.status(400).json({message:'Username and Password are required.'});

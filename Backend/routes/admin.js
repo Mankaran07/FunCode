@@ -2,12 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { Course, Admin } = require("../db");
 const jwt = require('jsonwebtoken');
-const {secret , authenticateJwt } = require("../middleware/auth");
+const {secret} = require("../middleware/auth");
+const {validateCredentials} = require("../middleware/valid");
 
 const router = express.Router();
 
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', validateCredentials, async (req, res) => {
     const {username , password} = req.body;
     // If one of the field are empty
     if(!username || !password) {
@@ -24,7 +25,7 @@ router.post('/signup', async (req, res) => {
     
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', validateCredentials , async (req, res) => {
     const {username , password} = req.body;
     // If one of the field are empty
     if(!username || !password) {
