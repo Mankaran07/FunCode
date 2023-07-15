@@ -2,13 +2,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const dotenv = require('dotenv');
 const adminRouter = require('./routes/admin');
 const userRouter = require('./routes/user');
 const adminCoursesRouter = require('./routes/courseAdmin');
 const userCoursesRouter = require('./routes/courseUser');
 const landingRouter = require('./routes/landing');
 
+dotenv.config();
 const app = express();
 app.use(bodyParser.json());
 
@@ -26,7 +27,7 @@ app.use('/admin/courses' , userCoursesRouter);
 app.use('/' , landingRouter);
 
 //MongoDB Connection
-mongoose.connect('mongodb+srv://mankaransingh39:admin@cluster0.ges4flm.mongodb.net/courses' , 
+mongoose.connect(process.env.DB_URL , 
   {
     dbName: 'courses',
     useNewUrlParser: true, 
